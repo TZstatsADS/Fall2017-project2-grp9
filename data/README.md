@@ -8,3 +8,5 @@ Useful Links:
 **Data:** https://catalog.data.gov/dataset/college-scorecard
 
 **Data dictionary:** https://collegescorecard.ed.gov/data/documentation/
+
+**Study on Dataset:** https://collegescorecard.ed.gov/assets/UsingFederalDataToMeasureAndImprovePerformance.pdf
