@@ -8,6 +8,16 @@ Accreditor for institution,ACCREDAGENCY
 URL for institution's homepage,INSTURL
 URL for institution's net price calculator,NPCURL
 Predominant degree awarded (recoded 0s and 4s),SCH_DEG
-,
-,
-,
+Admission rate,ADM_RATE
+Admission rate for all campuses rolled up to the 6-digit OPE ID,ADM_RATE_ALL
+25th percentile of SAT scores at the institution (critical reading),SATVR25
+75th percentile of SAT scores at the institution (critical reading),SATVR75
+25th percentile of SAT scores at the institution (math),SATMT25
+75th percentile of SAT scores at the institution (math),SATMT75
+25th percentile of SAT scores at the institution (writing),SATWR25
+75th percentile of SAT scores at the institution (writing),SATWR75
+Midpoint of SAT scores at the institution (critical reading),SATVRMID
+Midpoint of SAT scores at the institution (math),SATMTMID
+Midpoint of SAT scores at the institution (writing),SATWRMID
+Latitude,LATITUDE
+Longitude,LONGITUDE

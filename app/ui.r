@@ -1,30 +1,30 @@
+
+#Set-up
 library(shiny)
 library(leaflet)
+
+state.list <- c("AL", "IL", "AK", "AZ", "NM", "AR", "CA", "MN", "CO", "CT", "NY",
+"DE", "DC", "VA", "FL", "GA", "HI", "ID", "IN", "TN", "MI", "IA",
+"KS", "MO", "KY", "LA", "ME", "MD", "MA", "MS", "MT", "NE", "NV",
+"NH", "NJ", "NC", "ND", "OH", "WV", "OK", "OR", "PA", "RI", "SC",
+"SD", "TX", "UT", "VT", "WA", "WI", "WY", "AS", "GU", "MP", "PR",
+"FM", "PW", "VI", "MH")
+
+state.list <- state.list[order(state.list)]
+
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("2009 Manhattan Housing Sales"),
+  titlePanel("College Scorecard: Where do I want to study?"),
   
   # Sidebar with a selector input for neighborhood
   sidebarLayout(
     sidebarPanel(
-      selectInput("nbhd", label = h5("Choose a Manhattan Neighborhood"), 
-                         choices = list("all neighborhoods"=0,
-                                        "Central Harlem"=1, 
-                                        "Chelsea and Clinton"=2,
-                                        "East Harlem"=3, 
-                                        "Gramercy Park and Murray Hill"=4,
-                                        "Greenwich Village and Soho"=5, 
-                                        "Lower Manhattan"=6,
-                                        "Lower East Side"=7, 
-                                        "Upper East Side"=8, 
-                                        "Upper West Side"=9,
-                                        "Inwood and Washington Heights"=10), 
+      selectInput("state", label = h5("Choose a State"), 
+                         choices = state.list, 
                          selected = 0)
-      #sliderInput("p.range", label=h3("Price Range (in thousands of dollars)"),
-      #            min = 0, max = 20000, value = c(200, 10000))
     ),
     # Show two panels
     mainPanel(
