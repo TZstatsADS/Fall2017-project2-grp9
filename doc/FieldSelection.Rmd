@@ -1,0 +1,27 @@
+---
+title: "FieldSelection"
+author: "Henrique Saboya Lopes Tavares de Melo (hs2923)"
+date: "October 3, 2017"
+output: html_document
+---
+
+This code has the purpose of selecting essential columns/variables from the original College Scorecard Data
+
+```{r}
+data.path <- "../data/CollegeScorecard_Raw_Data/"
+
+#Reads file with fields that are relevant
+fields <- read.csv(paste(data.path, "SelectedFields.csv", sep = ""))
+
+#Remove any blank rows
+columns <- as.character(fields[,2])
+columns <- columns[!columns == ""]
+
+#Reads the entire dataset
+original.data <- read.csv(paste(data.path, "MERGED2014_15_PP.csv", sep = ""), header = T)
+names(original.data)[1] <- "UNITID"
+
+#Writes a csv file with the selected data
+work.data <- subset(original.data, select = columns)
+write.csv(work.data, file = paste(data.path, "WorkData.csv", sep = ""), row.names = F)
+```
