@@ -1,0 +1,13 @@
+NAME OF DATA ELEMENT,VARIABLE NAME
+Unit ID for institution,UNITID
+Institution name,INSTNM
+City,CITY
+State postcode,STABBR
+ZIP code,ZIP
+Accreditor for institution,ACCREDAGENCY
+URL for institution's homepage,INSTURL
+URL for institution's net price calculator,NPCURL
+Predominant degree awarded (recoded 0s and 4s),SCH_DEG
+,
+,
+,
