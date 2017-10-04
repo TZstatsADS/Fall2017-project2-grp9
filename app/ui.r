@@ -1,42 +1,22 @@
 library(shiny)
-library(leaflet)
+library(maps)
+library("leaflet")
 
-# Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("2009 Manhattan Housing Sales"),
+  titlePanel("Choose a college for you"),
   
-  # Sidebar with a selector input for neighborhood
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("nbhd", label = h5("Choose a Manhattan Neighborhood"), 
-                         choices = list("all neighborhoods"=0,
-                                        "Central Harlem"=1, 
-                                        "Chelsea and Clinton"=2,
-                                        "East Harlem"=3, 
-                                        "Gramercy Park and Murray Hill"=4,
-                                        "Greenwich Village and Soho"=5, 
-                                        "Lower Manhattan"=6,
-                                        "Lower East Side"=7, 
-                                        "Upper East Side"=8, 
-                                        "Upper West Side"=9,
-                                        "Inwood and Washington Heights"=10), 
-                         selected = 0)
-      #sliderInput("p.range", label=h3("Price Range (in thousands of dollars)"),
-      #            min = 0, max = 20000, value = c(200, 10000))
-    ),
-    # Show two panels
-    mainPanel(
-      #h4(textOutput("text")),
-      h3(code(textOutput("text1"))),
-      tabsetPanel(
-        # Panel 1 has three summary plots of sales. 
-        tabPanel("Sales summary", plotOutput("distPlot")), 
-        # Panel 2 has a map display of sales' distribution
-        tabPanel("Sales map", plotOutput("distPlot1"))),
-      leafletOutput("map", width = "80%", height = "400px")
-    )
- )
+  selectInput("sat", "SAT score", choices = c("lower than 1600","1600-1800","1800-2000","2000-2200","2200-2400")),
+  selectInput("act", "ACT score", choices = c("lower than 20","20-25","25-30","30-33","33-36")),
+  selectInput("gpa", "high school GPA", choices = c("lower than 2","2-2.5","2.5-3","3-3.5","3.5-3.8","3.8-4")),
+  selectInput("location"," Where you want to take your college in?",
+              choices = c("Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida"
+              ,"Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland"
+              ,"Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire"
+              ,"New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania"
+              ,"Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington"
+              ,"West Virginia","Wisconsin","Wyoming","District of Columbia","Puerto Rico","Guam"," American Samoa"
+              ,"U.S. Virgin Islands","Northern Mariana Islands")),
+  leafletOutput("mymap")
 ))
-
