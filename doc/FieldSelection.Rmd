@@ -27,21 +27,6 @@ write.csv(work.data, file = "../output/WorkData.csv", row.names = F)
 save(work.data, file = "../output/WorkData.Rdata")
 ```
 
-The next lines will get rid of sparse entries:
-
-```{r}
-sparse <- rep(NA, nrow(work.data))
-
-for(i in 1:nrow(work.data)){
-  sparse[i] <- sum(work.data[i,] == "NULL")
-}
-
-sum(sparse > 0.4*ncol(work.data))
-```
-
-
-
-
 
 
 
