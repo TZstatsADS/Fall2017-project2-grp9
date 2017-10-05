@@ -5,7 +5,7 @@ date: "October 3, 2017"
 output: html_document
 ---
 
-This code has the purpose of selecting essential columns/variables from the original College Scorecard Data
+This code has the purpose of selecting essential columns/variables from the original College Scorecard Data and Merge the final data.frame with other data frames.
 
 ```{r}
 data.path <- "../data/CollegeScorecard_Raw_Data/"
@@ -21,16 +21,21 @@ columns <- columns[!columns == ""]
 original.data <- read.csv(paste(data.path, "MERGED2014_15_PP.csv", sep = ""), header = T)
 names(original.data)[1] <- "UNITID"
 
-#Writes a csv file with the selected data
+#Filters data
 work.data <- subset(original.data, select = columns)
-write.csv(work.data, file = "../output/WorkData.csv", row.names = F)
-save(work.data, file = "../output/WorkData.Rdata")
+
+#Merge with Forbes Rank
+data.path <- "../data/"
+forbes.rank <- read.csv(paste(data.path, "ForbesRank.csv", sep = ""))
+
+work.data <- merge(x = work.data, y = forbes.rank[,1:2], by.x = "INSTNM", by.y = "Name",
+                   all.x = T, all.y = F)
+
+#Writes a csv file with the selected data
+write.csv(work.data, file = "../output/workdata.csv", row.names = F)
+save(work.data, file = "../output/workdata.Rdata")
 ```
-
-
-
-
-
+```
 
 
 
