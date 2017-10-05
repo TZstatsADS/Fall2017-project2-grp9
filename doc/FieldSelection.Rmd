@@ -23,5 +23,15 @@ names(original.data)[1] <- "UNITID"
 
 #Writes a csv file with the selected data
 work.data <- subset(original.data, select = columns)
-write.csv(work.data, file = paste(data.path, "WorkData.csv", sep = ""), row.names = F)
+write.csv(work.data, file = "../output/WorkData.csv", row.names = F)
+save(work.data, file = "../output/WorkData.Rdata")
 ```
+
+
+
+
+
+
+
+
+
