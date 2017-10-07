@@ -2,6 +2,7 @@ library(shiny)
 library(maps)
 library(leaflet)
 library(DT)
+library(dplyr)
 
 load("../output/workdata.Rdata")
 
@@ -11,18 +12,77 @@ shinyServer(function(input, output) {
   addTiles() %>%
   setView(lng = 360-95, lat =37, zoom = 4)
   output$mymap = renderLeaflet(map)
+  #Filter Data ----------------------------------------------------------------------------------------
+  major<-reactive({
+    major<-input$major
+  })
   
+  stp<-reactive({
+    stp<-input$schtype
+  })
+  
+  ct<-reactive({
+    ct<-input$city
+  })
+  
+  hd<-reactive({
+    hd<-input$hdeg
+  })
+  
+  st<-reactive({
+    st<-input$location
+  })
+  
+  d1<-reactive({
+    if (major() == "-----") {
+      d1 <- work.data
+    } 
+    else {
+      d1 <- work.data[work.data[,major()]==1,]
+    }}) 
+  
+  d2<- reactive({
+    if (stp() == "-----") {
+      d2<-d1() 
+    }  
+    else {
+      d2<- filter(d1(), CONTROL==stp())
+    }}) 
+  
+  d3<- reactive({
+    if (ct() == "-----") {
+      d3<-d2() 
+    }  
+    else {
+      d3<- filter(d2(), LOCALE==ct())
+    }}) 
+  
+  d4<- reactive({
+    if (hd() == "-----") {
+      d4<-d3() 
+    }  
+    else {
+      d4<- filter(d3(), HIGHDEG==hd())
+    }}) 
+  
+  d5<- reactive({
+    if (st() == "-----") {
+      d5<-d4() 
+    }  
+    else {
+      d5<- filter(d4(), STABBR==st())
+    }}) 
+ 
   #Table with University List --------------------------------------------------------------------------
   
   #Filtered data frame
-  work.data.table <- subset(work.data, select = c("Rank", "INSTNM", "STABBR", "ADM_RATE", "ACTCMMID", "SAT_AVG",
-                                                  "TUITIONFEE_IN", "TUITIONFEE_OUT"))
-  
-  colnames(work.data.table) <- c("Forbes Rank", "Institution", "State", "Admission Rate", "ACT Mid Point",
-                                 "Average SAT (admitted students)", "Tuition (In-State)", "Tuition (Out of State)")
   
   #Table output
   output$universities.table = DT::renderDataTable({
+    work.data.table <- subset(d5(), select = c("Rank", "INSTNM", "STABBR", "ADM_RATE", "ACTCMMID", "SAT_AVG","TUITIONFEE_IN", "TUITIONFEE_OUT"))
+  
+    colnames(work.data.table) <- c("Forbes Rank", "Institution", "State", "Admission Rate", "ACT Mid Point","Average SAT (admitted students)", "Tuition (In-State)", "Tuition (Out of State)")
+
     datatable(work.data.table, 
               rownames = F, 
               options = list(order = list(list(0, 'asc'), list(1, "asc"))))  %>%
@@ -43,4 +103,5 @@ shinyServer(function(input, output) {
   
   #------------------------------------------------------------------------------------------------------
   
+
   })
