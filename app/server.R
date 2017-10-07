@@ -32,13 +32,22 @@ shinyServer(function(input, output) {
   st<-reactive({
     st<-input$location
   })
+ 
+   cost<-reactive({
+    cost<-input$cost
+  })
+  
+  
+  d6<-reactive({
+    d6<- filter(work.data, as.numeric(COSTT4_A)>=cost()[1]& as.numeric(COSTT4_A)<=cost()[2])
+  } )
   
   d1<-reactive({
     if (major() == "-----") {
-      d1 <- work.data
+      d1 <- d6()
     } 
     else {
-      d1 <- work.data[work.data[,major()]==1,]
+      d1 <- d6[d6[,major()]==1,]
     }}) 
   
   d2<- reactive({

@@ -28,9 +28,7 @@ dashboardPage(
                 menuItem("Choose the University",tabName="university_search",icon=icon("search"))
     ),
   
-    sliderInput("sat", "SAT score", min = 0, max = 1600, step = 100, value = 1000),
-  
-    sliderInput("act", "ACT score", min = 1, max = 36, step = 1, value = 23),
+    sliderInput("cost", label = "Cost by Year ", min = 0, max =80000, value = c(1,80000)),
   
     selectInput("location"," Where you want to take your college in?",
               choices = c("-----","AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE"
