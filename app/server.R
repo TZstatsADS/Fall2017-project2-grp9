@@ -10,7 +10,7 @@ shinyServer(function(input, output) {
   
   map = leaflet() %>% 
   addTiles() %>%
-  setView(lng = 360-95, lat =37, zoom = 4)
+  setView(lng = 360-95, lat =40, zoom = 4)
   output$mymap = renderLeaflet(map)
   #Filter Data ----------------------------------------------------------------------------------------
   major<-reactive({
@@ -90,6 +90,7 @@ shinyServer(function(input, output) {
       formatCurrency(c("Tuition (In-State)", "Tuition (Out of State)"), digits = 0)
     }, server = T
   )
+  output$introduction<- renderText({"This is an application for perspective students to choose the colleges that fit them best, developed by u u u and me"})
   
   #Selected indices--------------------------------------------------------------------------------------
   
