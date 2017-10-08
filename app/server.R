@@ -97,7 +97,28 @@ shinyServer(function(input, output) {
     else {
       d5<- filter(d4(), STABBR==st())
     }}) 
- 
+
+   
+   # leaflet(data =d5())%>%
+   #   addTiles()%>%
+   #   addMarkers(~long, ~lat)
+
+  output$mymap <- renderLeaflet({
+    urls <- paste0(as.character("<b><a href='http://"), as.character(d5()$INSTURL), "'>", as.character(d5()$INSTNM),as.character("</a></b>"))
+    content <- paste(sep = "<br/>",
+                     urls, 
+                     paste("Rank:", as.character(d5()$Rank))
+    )
+    
+    mapStates = map("state", fill = TRUE, plot = FALSE)
+    leaflet(data = mapStates) %>% addTiles() %>%
+      addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
+      addMarkers(as.numeric(d5()$LONGITUDE), as.numeric(d5()$LATITUDE), 
+                 popup = content)
+  } )
+
+  
+  
   #Table with University List --------------------------------------------------------------------------
   
   #Filtered data frame
