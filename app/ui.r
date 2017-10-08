@@ -74,9 +74,17 @@ dashboardPage(
         
         tabItem(tabName = "university_search",
                 
-                fluidRow(
                   tabBox(width=12,
-                         tabPanel(title="Map",width = 12,solidHeader = T,leafletOutput("mymap"))),
+                         tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("mymap")),
+                          
+                            tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
+                                     fluidRow(
+                                       column(4,tableOutput("table.summary")),
+                                       column(8,plotlyOutput("gender.bar"))
+                            
+                          )
+                        )
+                  ),
                   
                   
                   tabBox(width = 12,
@@ -89,4 +97,4 @@ dashboardPage(
         
         
       )
-)))))
+))))

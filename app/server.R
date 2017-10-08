@@ -130,7 +130,7 @@ shinyServer(function(input, output) {
     colnames(work.data.table) <- c("Forbes Rank", "Institution", "State", "Admission Rate", "ACT Mid Point","Average SAT (admitted students)", "Tuition (In-State)", "Tuition (Out of State)")
 
     datatable(work.data.table, 
-              rownames = F, 
+              rownames = F, selection = "single",
               options = list(order = list(list(0, 'asc'), list(1, "asc"))))  %>%
       formatPercentage(c("Admission Rate"), digits = 0) %>%
       formatCurrency(c("Tuition (In-State)", "Tuition (Out of State)"), digits = 0)
@@ -140,15 +140,38 @@ shinyServer(function(input, output) {
   
   #Selected indices--------------------------------------------------------------------------------------
   
-  output$example = renderPrint({
-    s = input$universities.table_rows_selected
+  output$table.summary = renderTable({
+    #s = input$universities.table_rows_selected
+    s = input$universities.table_row_last_clicked
     if (length(s)) {
-      cat('These rows were selected:\n\n')
-      cat(s, sep = ', ')
-      }
+      
+      sub <- d5()[s,]
+      
+      Features <- c("Name","Website", "City", "Highest Degree", "Control")
+      
+      Info <- c(sub$INSTNM ,sub$INSTURL, sub$CITY, sub$HIGHDEG, sub$CONTROL)
+      
+      my.summary <- data.frame(cbind(Features, Info))
+      my.summary
+      
+      } else print("Please, select a University from the table below.")
     })
   
+  output$gender.bar = renderPlotly({
+
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      
+      
+      
+    } 
+  })
+  
   #------------------------------------------------------------------------------------------------------
+  
+  
+  
+  
   
 
   })
