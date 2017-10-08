@@ -63,7 +63,7 @@ shinyServer(function(input, output) {
       d1 <- d8()
     } 
     else {
-      d1 <- d8[d8[,major()]==1,]
+      d1 <- d8()[d8()[,major()]==1,]
     }}) 
   
   d2<- reactive({
