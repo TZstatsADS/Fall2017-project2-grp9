@@ -29,7 +29,8 @@ dashboardPage(
     ),
   
     sliderInput("cost", label = "Cost by Year ", min = 0, max =80000, value = c(1,80000)),
-  
+    sliderInput(inputId="sat",label = "SAT Score",value = 900,min = 0,max = 1600,step = 1 ),
+    sliderInput("act",label = "ACT Score",min=0,max=36, value =20,step = 1 ),
     selectInput("location"," Where you want to take your college in?",
               choices = c("-----","AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE"
               ,"FL","FM","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD"

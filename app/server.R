@@ -36,18 +36,34 @@ shinyServer(function(input, output) {
    cost<-reactive({
     cost<-input$cost
   })
-  
-  
+   sat<-reactive({
+     sat<-input$sat
+   })
+   act<-reactive({
+     act<-input$act
+   })
+   
+   
   d6<-reactive({
-    d6<- filter(work.data, as.numeric(COSTT4_A)>=cost()[1]& as.numeric(COSTT4_A)<=cost()[2])
+    d6<- filter(work.data, as.numeric(COSTT4_A)>=cost()[1] & as.numeric(COSTT4_A)<=cost()[2])
   } )
-  
+
+  d7<-reactive({
+    d7<-filter(d6(), as.numeric(SAT_AVG)<sat())
+
+  })
+
+  d8<-reactive({
+    d8<-filter(d7(), as.numeric(ACTCMMID)<act())
+    })
+
+
   d1<-reactive({
     if (major() == "-----") {
-      d1 <- d6()
+      d1 <- d8()
     } 
     else {
-      d1 <- d6[d6[,major()]==1,]
+      d1 <- d8[d8[,major()]==1,]
     }}) 
   
   d2<- reactive({
