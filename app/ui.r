@@ -1,48 +1,92 @@
+packages.used=c("shiny", "plotly", "shinydashboard", "leaflet","DT")
+
+# check packages that need to be installed.
+packages.needed=setdiff(packages.used, 
+                        intersect(installed.packages()[,1], 
+                                  packages.used))
+# install additional packages
+if(length(packages.needed)>0){
+  install.packages(packages.needed, dependencies = TRUE,repos = "http://cran.us.r-project.org")
+}
+
 library(shiny)
 library(maps)
 library(leaflet)
 library(DT)
+library(shinydashboard)
+library(plotly)
 
 
 
-shinyUI(fluidPage(
+dashboardPage(
   
-  
-  # Application title
-  titlePanel("Choose a college for you"),
-  
-  sidebarPanel(
-  
-    selectInput("sat", "SAT score", choices = c("lower than 1600","1600-1800","1800-2000","2000-2200","2200-2400")),
-  
-    selectInput("act", "ACT score", choices = c("lower than 20","20-25","25-30","30-33","33-36")),
-  
-    selectInput("gpa", "high school GPA", choices = c("lower than 2","2-2.5","2.5-3","3-3.5","3.5-3.8","3.8-4")),
-  
-    selectInput("location"," Where you want to take your college in?",
-              choices = c("Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida"
-              ,"Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland"
-              ,"Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire"
-              ,"New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania"
-              ,"Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington"
-              ,"West Virginia","Wisconsin","Wyoming","District of Columbia","Puerto Rico","Guam"," American Samoa"
-              ,"U.S. Virgin Islands","Northern Mariana Islands")),
-  width = 4),
-  
-  mainPanel(
-  
-    leafletOutput("mymap")
-  ),
-  
-  wellPanel(
-  
-    DT::dataTableOutput("universities.table")
-  
+  dashboardHeader(title='Choose a college!'),
+  skin = "green",
+  dashboardSidebar(
+    sidebarMenu(id='sidebarmenu',
+                menuItem("Introduction",tabName="overview",icon=icon("info")),
+                menuItem("Choose the University",tabName="university_search",icon=icon("search"))
     ),
   
-  fluidRow(
+    sliderInput("cost", label = "Cost by Year ", min = 0, max =80000, value = c(1,80000)),
+    sliderInput(inputId="sat",label = "SAT Score",value = 900,min = 0,max = 1600,step = 1 ),
+    sliderInput("act",label = "ACT Score",min=0,max=36, value =20,step = 1 ),
+    selectInput("location"," Where you want to take your college in?",
+              choices = c("-----","AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE"
+              ,"FL","FM","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD"
+              ,"ME","MH","MI","MN","MO","MP","MS","MT","NC","ND","NE","NH","NJ","NM","NV"
+              ,"NY","OH","OK","OR"
+              ,"PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT"
+              ,"WA","WI","WV","WY")),
+    
+    selectInput("major", "Major",
+                choices = c("-----",
+                            "Agriculture, Agriculture Operations, and Related Sciences","Natural Resources and Conservation","Architecture and Related Services",
+                            "Area, Ethnic, Cultural, Gender, and Group Studies","Communication, Journalism, and Related Programs","Communications Technologies/Technicians and Support Services",
+                            "Computer and Information Sciences and Support Services","Personal and Culinary Services","Education","Engineering","Engineering Technologies and Engineering-Related Fields",
+                            "Foreign Languages, Literatures, and Linguistics","Family and Consumer Sciences/Human Sciences","Legal Professions and Studies","English Language and Literature/Letters",
+                            "Liberal Arts and Sciences, General Studies and Humanities","Library Science","Biological and Biomedical Sciences","Mathematics and Statistics",
+                            "Military Technologies and Applied Sciences","Multi/Interdisciplinary Studies","Parks, Recreation, Leisure, and Fitness Studies","Philosophy and Religious Studies",
+                            "Theology and Religious Vocations","Physical Sciences","Science Technologies/Technicians","Psychology","Homeland Security, Law Enforcement, Firefighting and Related Protective Services",
+                            "Public Administration and Social Service Professions","Social Sciences","Construction Trades","Mechanic and Repair Technologies/Technicians","Precision Production",
+                            "Transportation and Materials Moving","Visual and Performing Arts","Health Professions and Related Programs",
+                            "Business, Management, Marketing, and Related Support Services","History")),
+    
+    selectInput("city", "City Size", choices = c("-----","City","Suburb","Town","Rural")),
+    
+    selectInput("schtype", "Control of Instituion", choices = c("-----","Public","Private nonprofit","Private for-profit")),
+    
+    selectInput("hdeg", "Highest Degree", choices = c("-----","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
+    
+    width = '300'
 
-    column(4, verbatimTextOutput('example'))
-  )
-  
-))
+    ),
+    
+    dashboardBody(
+      
+      tabItems(
+        
+        tabItem(tabName = "overview",
+                mainPanel(
+                  
+                  textOutput("introduction")
+                )),
+        
+        tabItem(tabName = "university_search",
+                
+                fluidRow(
+                  tabBox(width=12,
+                         tabPanel(title="Map",width = 12,solidHeader = T,leafletOutput("mymap"))),
+                  
+                  
+                  tabBox(width = 12,
+                         
+                         tabPanel('Ranking',
+                                  dataTableOutput("universities.table"),
+                                  tags$style(type="text/css", '#myTable tfoot {display:none;}'))
+        
+        
+        
+        
+      )
+)))))

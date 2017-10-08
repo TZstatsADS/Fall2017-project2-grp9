@@ -18,11 +18,49 @@ columns <- as.character(fields[,2])
 columns <- columns[!columns == ""]
 
 #Reads the entire dataset
-original.data <- read.csv(paste(data.path, "MERGED2014_15_PP.csv", sep = ""), header = T)
+original.data <- read.csv(paste(data.path, "MERGED2014_15_PP.csv", sep = ""), header = T, stringsAsFactors = FALSE)
 names(original.data)[1] <- "UNITID"
 
 #Filters data
 work.data <- subset(original.data, select = columns)
+names(work.data)[37:74] <- c("Agriculture, Agriculture Operations, and Related Sciences",
+                             "Natural Resources and Conservation",
+                             "Architecture and Related Services",
+                             "Area, Ethnic, Cultural, Gender, and Group Studies",
+                             "Communication, Journalism, and Related Programs",
+                             "Communications Technologies/Technicians and Support Services",
+                             "Computer and Information Sciences and Support Services",
+                             "Personal and Culinary Services",
+                             "Education",
+                             "Engineering",
+                             "Engineering Technologies and Engineering-Related Fields",
+                             "Foreign Languages, Literatures, and Linguistics",
+                             "Family and Consumer Sciences/Human Sciences",
+                             "Legal Professions and Studies",
+                             "English Language and Literature/Letters",
+                             "Liberal Arts and Sciences, General Studies and Humanities",
+                             "Library Science",
+                             "Biological and Biomedical Sciences",
+                             "Mathematics and Statistics",
+                             "Military Technologies and Applied Sciences",
+                             "Multi/Interdisciplinary Studies",
+                             "Parks, Recreation, Leisure, and Fitness Studies",
+                             "Philosophy and Religious Studies",
+                             "Theology and Religious Vocations",
+                             "Physical Sciences",
+                             "Science Technologies/Technicians",
+                             "Psychology",
+                             "Homeland Security, Law Enforcement, Firefighting and Related Protective Services",
+                             "Public Administration and Social Service Professions",
+                             "Social Sciences",
+                             "Construction Trades",
+                             "Mechanic and Repair Technologies/Technicians",
+                             "Precision Production",
+                             "Transportation and Materials Moving",
+                             "Visual and Performing Arts",
+                             "Health Professions and Related Programs",
+                             "Business, Management, Marketing, and Related Support Services",
+                             "History")
 
 #Merge with Forbes Rank
 data.path <- "../data/"
@@ -31,10 +69,47 @@ forbes.rank <- read.csv(paste(data.path, "ForbesRank.csv", sep = ""))
 work.data <- merge(x = work.data, y = forbes.rank[,1:2], by.x = "INSTNM", by.y = "Name",
                    all.x = T, all.y = F)
 
+
+for (i in 1:nrow(work.data)) {
+  if (work.data$LOCALE[i]==11 | work.data$LOCALE[i]== 12 | work.data$LOCALE[i]==13) {
+    work.data$LOCALE[i]<-"City"
+  }
+  else if (work.data$LOCALE[i]==21 | work.data$LOCALE[i]== 22 | work.data$LOCALE[i]==23) {
+    work.data$LOCALE[i]<- "Suburb"
+  }
+  else if (work.data$LOCALE[i]==31 | work.data$LOCALE[i]== 32 | work.data$LOCALE[i]==33) {
+    work.data$LOCALE[i]<- "Town"
+  }
+  else if (work.data$LOCALE[i]==41 | work.data$LOCALE[i]== 42 | work.data$LOCALE[i]==43){
+    work.data$LOCALE[i]<- "Rural"
+  }
+}
+
+
+for (j in 37:74){
+  for (i in 1:nrow(work.data)){
+    if (work.data[i,j] == 0){
+      work.data[i,j] = 0
+    }
+    else if (work.data[i,j] == "NULL"){
+      work.data[i,j] = "NULL"
+    }
+    else work.data[i,j] = 1
+  }
+}
+
+work.data$HIGHDEG[work.data$HIGHDEG == "0"] = "Non-degree-granting"
+work.data$HIGHDEG[work.data$HIGHDEG == "1"] = "Certificate"
+work.data$HIGHDEG[work.data$HIGHDEG == "2"] = "Associate"
+work.data$HIGHDEG[work.data$HIGHDEG == "3"] = "Bachelor"
+work.data$HIGHDEG[work.data$HIGHDEG == "4"] = "Graduate"
+
+work.data$CONTROL[work.data$CONTROL == "1"] = "Public"
+work.data$CONTROL[work.data$CONTROL == "2"] = "Private nonprofit"
+work.data$CONTROL[work.data$CONTROL == "3"] = "Private for-profit"
 #Writes a csv file with the selected data
 write.csv(work.data, file = "../output/workdata.csv", row.names = F)
 save(work.data, file = "../output/workdata.Rdata")
-```
 ```
 
 
