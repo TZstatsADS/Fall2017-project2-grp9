@@ -20,7 +20,7 @@ library(plotly)
 
 dashboardPage(
   
-  dashboardHeader(title='Choose a college!'),
+  dashboardHeader(title='Find your university!'),
   skin = "blue",
   dashboardSidebar(
     sidebarMenu(id='sidebarmenu',
