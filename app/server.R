@@ -110,11 +110,32 @@ shinyServer(function(input, output) {
                      paste("Rank:", as.character(d5()$Rank))
     )
     
-    mapStates = map("state", fill = TRUE, plot = FALSE)
-    leaflet(data = mapStates) %>% addTiles() %>%
-      addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
-      addMarkers(as.numeric(d5()$LONGITUDE), as.numeric(d5()$LATITUDE), 
+    s = input$universities.table_rows_selected
+    
+    greenLeafIcon <- makeIcon(
+      iconUrl = "http://www.myiconfinder.com/uploads/iconsets/256-256-f900504cdc9f243b1c6852985c35a7f7.png",
+      iconWidth = 50, iconHeight = 40,
+      iconAnchorX = 40, iconAnchorY = 20
+    )
+    
+    if(length(s)){
+      mapStates = map("state", fill = TRUE, plot = FALSE)
+      leaflet(data = mapStates) %>% addTiles() %>%
+        addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE[-s]), as.numeric(d5()$LATITUDE[-s]), 
+                   popup = content) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE[s]), as.numeric(d5()$LATITUDE[s]), icon = greenLeafIcon)
+      
+    }
+    
+    else{
+      mapStates = map("state", fill = TRUE, plot = FALSE)
+      leaflet(data = mapStates) %>% addTiles() %>%
+        addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE), as.numeric(d5()$LATITUDE), 
                  popup = content)
+    }
+
   } )
 
   
