@@ -7,11 +7,6 @@ library(dplyr)
 load("../output/workdata.Rdata")
 
 shinyServer(function(input, output) {
-  
-  map = leaflet() %>% 
-  addTiles() %>%
-  setView(lng = 360-95, lat =40, zoom = 4)
-  output$mymap = renderLeaflet(map)
   #Filter Data ----------------------------------------------------------------------------------------
   major<-reactive({
     major<-input$major
@@ -114,8 +109,8 @@ shinyServer(function(input, output) {
     
     greenLeafIcon <- makeIcon(
       iconUrl = "http://www.myiconfinder.com/uploads/iconsets/256-256-f900504cdc9f243b1c6852985c35a7f7.png",
-      iconWidth = 50, iconHeight = 40,
-      iconAnchorX = 40, iconAnchorY = 20
+      iconWidth = 50, iconHeight = 53,
+      iconAnchorX = 0, iconAnchorY = 0
     )
     
     if(length(s)){
@@ -157,8 +152,17 @@ shinyServer(function(input, output) {
       formatCurrency(c("Tuition (In-State)", "Tuition (Out of State)"), digits = 0)
     }, server = T
   )
-  output$introduction<- renderText({"This is an application for perspective students to choose the colleges that fit them best, developed by u u u and me"})
   
+  #Introduction-------------------------------------------------------------------------------------------
+  
+  output$introduction<- renderText({
+          "This is an application for perspective students to choose the colleges that fit them best. This is an Rshiny project developed by Peilin, Qihang, 
+          Henrique, Kelly and Sijian. You can input your scores, expected expense, majors and some other preferences and see our recommendations for you 
+          immediately. You can also see the detailed informationby clicking the marker on the interactive map. "})
+  output$instruction = renderText({"the instruction goes here"})
+  output$datasource = renderText({"Data source: Higher Education Datasets, 
+          https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4"
+  })
   #Selected indices--------------------------------------------------------------------------------------
   
   output$table.summary = renderTable({
@@ -190,9 +194,4 @@ shinyServer(function(input, output) {
   
   #------------------------------------------------------------------------------------------------------
   
-  
-  
-  
-  
-
   })

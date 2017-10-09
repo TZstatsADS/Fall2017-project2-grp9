@@ -21,7 +21,7 @@ library(plotly)
 dashboardPage(
   
   dashboardHeader(title='Choose a college!'),
-  skin = "green",
+  skin = "blue",
   dashboardSidebar(
     sidebarMenu(id='sidebarmenu',
                 menuItem("Introduction",tabName="overview",icon=icon("info")),
@@ -69,7 +69,9 @@ dashboardPage(
         tabItem(tabName = "overview",
                 mainPanel(
                   
-                  textOutput("introduction")
+                  textOutput("introduction"),
+                  textOutput("instruction"),
+                  textOutput("datasource")
                 )),
         
         tabItem(tabName = "university_search",
