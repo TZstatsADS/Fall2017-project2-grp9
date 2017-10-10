@@ -82,8 +82,9 @@ dashboardPage(
                           
                          tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
                                      fluidRow(
-                                       column(4,tableOutput("table.summary")),
-                                       column(8,plotlyOutput("gender.bar"))
+                                       column(3,tableOutput("table.summary")),
+                                       column(3,tableOutput("table.summary2")),
+                                       column(4,tableOutput("table.summary3"))
                                        
                             
                           )),

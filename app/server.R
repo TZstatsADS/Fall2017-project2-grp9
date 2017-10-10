@@ -192,15 +192,57 @@ shinyServer(function(input, output) {
       
       sub <- d5()[s,]
       
-      Features <- c("Name","Website", "City", "Highest Degree", "Control")
+      Institution <- c("Name","Website", "City", "Highest Degree", "Control", "City Size")
       
-      Info <- c(sub$INSTNM ,sub$INSTURL, sub$CITY, sub$HIGHDEG, sub$CONTROL)
+      Info <- c(sub$INSTNM ,sub$INSTURL, sub$CITY, sub$HIGHDEG, sub$CONTROL, sub$LOCALE)
       
-      my.summary <- data.frame(cbind(Features, Info))
+      my.summary <- data.frame(cbind(Institution, Info))
       my.summary
       
       } else print("Please, select a University from the table below.")
     })
+  
+  output$table.summary2 = renderTable({
+    #s = input$universities.table_rows_selected
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      
+      university <- d5()$INSTNM[s]
+      sub <- filter(fulldata, INSTNM == university & Year == "2016")
+      
+      Demographics <- c("Male %", "Female %", "Average age of entry", "% of Undergraduates aged 25+")
+      
+      Info <- c(as.numeric(sub$UGDS_MEN)*100, as.numeric(sub$UGDS_WOMEN)*100, 
+                round(as.numeric(sub$AGE_ENTRY), digits = 2), as.numeric(sub$UG25ABV)*100)
+      
+      my.summary <- data.frame(cbind(Demographics, Info))
+      names(my.summary) <- c("Demographics (2016)", "Info")
+      my.summary
+      
+    } 
+  })
+  
+  output$table.summary3 = renderTable({
+    #s = input$universities.table_rows_selected
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      
+      university <- d5()$INSTNM[s]
+      sub <- filter(fulldata, INSTNM == university)
+      sub[sub == "NULL"] <-NA
+      
+      Financial <- c("Undergraduate students receiving federal loan %", "Median Debt: Students who have completed", 
+                 "Median Debt: Students who have NOT completed", "Median Earnings: Students 10 years after entry")
+      
+      Info <- c(round(mean(as.numeric(sub$PCTFLOAN), na.rm = T) * 100,2), round(mean(as.numeric(sub$GRAD_DEBT_MDN), na.rm = T),0), 
+                round(mean(as.numeric(sub$WDRAW_DEBT_MDN), na.rm = T) * 100,0), round(mean(as.numeric(sub$MD_EARN_WNE_P10), na.rm = T),0))
+      
+      my.summary <- data.frame(cbind(Financial, Info))
+      names(my.summary) <- c("Financial (last 5 years average)", "Info")
+      my.summary
+      
+    } 
+  })
   
   #------------------------------------------------------------------------------------------------------
   
