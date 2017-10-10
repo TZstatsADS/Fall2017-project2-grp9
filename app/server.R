@@ -123,8 +123,8 @@ shinyServer(function(input, output) {
     
     greenLeafIcon <- makeIcon(
       iconUrl = "../lib/RedPin.png",
-      iconWidth = 50, iconHeight = 40,
-      iconAnchorX = 40, iconAnchorY = 20
+      iconWidth = 64, iconHeight = 64,
+      iconAnchorX = 32, iconAnchorY = 59
     )
     
     if(length(s)){
@@ -265,7 +265,9 @@ output$table.summary = renderTable({
      p <- ggplot(data = edu,aes(x=Year, y=ADM_RATE)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Admission Rate with Trending")
      ggplotly(p)
      }
-     else print("Please, select a University from the table below.")
+     else {
+       ggplotly(ggplot()+ggtitle("Please, select a University from the table below."))
+     }
    })
   
   output$SAT <- renderPlotly({
@@ -278,7 +280,9 @@ output$table.summary = renderTable({
       b <- ggplot(data = edu,aes(x=Year, y=SAT_AVG)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Average SAT with Trending")
       ggplotly(b)
     }
-    else print("Please, select a University from the table below.")
+    else  {
+      ggplotly(ggplot()+ggtitle("Please, select a University from the table below."))
+    }
   })
   
 
@@ -292,7 +296,9 @@ output$table.summary = renderTable({
       a <- ggplot(data = edu,aes(x=Year, y=ACTCMMID)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year ACT MID with Trending")
       ggplotly(a)
     }
-    else print("Please, select a University from the table below.")
+    else  {
+      ggplotly(ggplot()+ggtitle("Please, select a University from the table below."))
+    }
   })
   
   output$FEM <- renderPlotly({
@@ -305,22 +311,26 @@ output$table.summary = renderTable({
       d <- ggplot(data = edu,aes(x=Year, y=UGDS_WOMEN)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Share of Female Undergrads with Trending")
       ggplotly(d)
     }
-    else print("Please, select a University from the table below.")
+    else  {
+      ggplotly(ggplot()+ggtitle("Please, select a University from the table below."))
+    }
   })
   
-  # output$ENR <- renderPlotly({
-  #   s = input$universities.table_row_last_clicked
-  #   if (length(s)) {
-  #     university <- d5()$INSTNM[s]
-  #     edu <- filter(fulldata, INSTNM == university)
-  #     edu$UGDS = as.numeric(edu$UGDS)
-  #     edu$Year = as.numeric(edu$Year)
-  #     e <- ggplot(data = edu,aes(x=Year, y=UGDS)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Enrollments with Trending")
-  #     ggplotly(e)
-  #   }
-  #   else print("Please, select a University from the table below.")
-  # })
-  # 
+  output$ENR <- renderPlotly({
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      university <- d5()$INSTNM[s]
+      edu <- filter(fulldata, INSTNM == university)
+      edu$UGDS = as.numeric(edu$UGDS)
+      edu$Year = as.numeric(edu$Year)
+      e <- ggplot(data = edu,aes(x=Year, y=UGDS)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Enrollments with Trending")
+      ggplotly(e)
+    }
+    else {
+      ggplotly(ggplot()+ggtitle("Please, select a University from the table below."))
+    }
+  })
+
   
 
 
