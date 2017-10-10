@@ -115,6 +115,12 @@ shinyServer(function(input, output) {
     
     s = input$universities.table_rows_selected
     
+    url2 <- paste0(as.character("<b><a href='http://"), as.character(d5()$INSTURL[s]), "'>", as.character(d5()$INSTNM[s]),as.character("</a></b>"))
+    content2 <- paste(sep = "<br/>",
+                     url2, 
+                     paste("Rank:", as.character(d5()$Rank[s]))
+    )
+    
     greenLeafIcon <- makeIcon(
       iconUrl = "http://www.myiconfinder.com/uploads/iconsets/256-256-f900504cdc9f243b1c6852985c35a7f7.png",
       iconWidth = 50, iconHeight = 40,
@@ -127,7 +133,8 @@ shinyServer(function(input, output) {
         addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
         addMarkers(as.numeric(d5()$LONGITUDE[-s]), as.numeric(d5()$LATITUDE[-s]), 
                    popup = content) %>%
-        addMarkers(as.numeric(d5()$LONGITUDE[s]), as.numeric(d5()$LATITUDE[s]), icon = greenLeafIcon)
+        addMarkers(as.numeric(d5()$LONGITUDE[s]), as.numeric(d5()$LATITUDE[s]),
+                   icon = greenLeafIcon, popup = content2)
       
     }
     
