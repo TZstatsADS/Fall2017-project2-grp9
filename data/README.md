@@ -11,3 +11,5 @@ Useful Links:
 **Data dictionary:** https://collegescorecard.ed.gov/data/documentation/
 
 **Study on Dataset:** https://collegescorecard.ed.gov/assets/UsingFederalDataToMeasureAndImprovePerformance.pdf
+
+**Forbes Ranks Data:** http://www.forbes.com/sites/nataliesportelli/2016/07/06/the-full-list-of-americas-top-colleges-2016/#191c50d569a4
