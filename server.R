@@ -6,8 +6,8 @@ library(dplyr)
 library(plotly)
 library(ggplot2)
 
-load("../output/workdata.Rdata")
-load("../output/fulldata.Rdata")
+load("../data/workdata.Rdata")
+load("../data/fulldata.Rdata")
 
 shinyServer(function(input, output) {
   
