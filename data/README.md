@@ -1,7 +1,8 @@
-# Project: NYC Open Data
+# Project: Find your university
 ### Data folder
 
 The data directory contains data used in the analysis. This is treated as read only; in paricular the R/python files are never allowed to write to the files in here. Depending on the project, these might be csv files, a database, and the directory itself may have subdirectories.
+Here we have the dataset Higher Education Datasets from www.data.gov and the dataset Forbes rank from:
 
 Useful Links:
 

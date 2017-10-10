@@ -20,8 +20,8 @@ library(plotly)
 
 dashboardPage(
   
-  dashboardHeader(title='Choose a college!'),
-  skin = "green",
+  dashboardHeader(title='Find your university!'),
+  skin = "blue",
   dashboardSidebar(
     sidebarMenu(id='sidebarmenu',
                 menuItem("Introduction",tabName="overview",icon=icon("info")),

@@ -159,6 +159,7 @@ shinyServer(function(input, output) {
       formatCurrency(c("Tuition (In-State)", "Tuition (Out of State)"), digits = 0)
     }, server = T
   )
+
   #Introduction-------------------------------------------------------------------------------------------
   
   output$introduction<- renderText({
@@ -169,7 +170,18 @@ shinyServer(function(input, output) {
   output$datasource = renderText({"Data source: Higher Education Datasets, 
           https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4"
   })
+
   
+  #Introduction-------------------------------------------------------------------------------------------
+  
+  output$introduction<- renderText({
+          "This is an application for perspective students to choose the colleges that fit them best. This is an Rshiny project developed by Peilin, Qihang, 
+          Henrique, Kelly and Sijian. You can input your scores, expected expense, majors and some other preferences and see our recommendations for you 
+          immediately. You can also see the detailed informationby clicking the marker on the interactive map. "})
+  output$instruction = renderText({"the instruction goes here"})
+  output$datasource = renderText({"Data source: Higher Education Datasets, 
+          https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4"
+  })
   #Selected indices--------------------------------------------------------------------------------------
   
   output$table.summary = renderTable({
@@ -219,6 +231,7 @@ shinyServer(function(input, output) {
     else print("Please, select a University from the table below.")
   })
   
+
   output$ACT <- renderPlotly({
     s = input$universities.table_row_last_clicked
     if (length(s)) {
@@ -258,6 +271,10 @@ shinyServer(function(input, output) {
   #   else print("Please, select a University from the table below.")
   # })
   # 
+  
+
+
+  #------------------------------------------------------------------------------------------------------
   
 
   })
