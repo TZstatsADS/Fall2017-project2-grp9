@@ -74,18 +74,25 @@ dashboardPage(
                   textOutput("datasource")
                 )),
         
+        
         tabItem(tabName = "university_search",
-                
-                  tabBox(width=12,
+                fluidRow(
+                                   tabBox(width=12,
                          tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("mymap")),
                           
-                            tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
+                         tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
                                      fluidRow(
-                                       column(4,tableOutput("table.summary")),
-                                       column(8,plotlyOutput("gender.bar"))
+                                       column(3,tableOutput("table.summary")),
+                                       column(3,tableOutput("table.summary2")),
+                                       column(4,tableOutput("table.summary3"))
+                                       
                             
-                          )
-                        )
+                          )),
+                         tabPanel(title = "Admission Rate Trend", width = 12, solidHeader = T, plotlyOutput("ADM")),
+                         tabPanel(title = "Average SAT Trend", width = 12, solidHeader = T, plotlyOutput("SAT")),
+                         tabPanel(title = "MID ACT Trend", width = 12, solidHeader = T, plotlyOutput("ACT")),
+                         tabPanel(title = "Share of Female Students Trend", width = 12, solidHeader = T, plotlyOutput("FEM")),
+                         tabPanel(title = "Total Enrollments Trend", width = 12, solidHeader = T, plotlyOutput("ENR"))
                   ),
                   
                   
@@ -93,7 +100,10 @@ dashboardPage(
                          
                          tabPanel('Ranking',
                                   dataTableOutput("universities.table"),
-                                  tags$style(type="text/css", '#myTable tfoot {display:none;}'))
+                                  tags$style(type="text/css", '#myTable tfoot {display:none;}')) 
+                )
+                
+
         
         
         

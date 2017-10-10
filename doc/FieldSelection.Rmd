@@ -10,6 +10,7 @@ This code has the purpose of selecting essential columns/variables from the orig
 ```{r}
 data.path <- "../data/CollegeScorecard_Raw_Data/"
 
+fulldata <- read.csv(paste(data.path, "5_Year_Data.csv", sep = ""), header = T, stringsAsFactors = FALSE)
 #Reads file with fields that are relevant
 fields <- read.csv(paste(data.path, "SelectedFields.csv", sep = ""))
 
@@ -107,9 +108,11 @@ work.data$HIGHDEG[work.data$HIGHDEG == "4"] = "Graduate"
 work.data$CONTROL[work.data$CONTROL == "1"] = "Public"
 work.data$CONTROL[work.data$CONTROL == "2"] = "Private nonprofit"
 work.data$CONTROL[work.data$CONTROL == "3"] = "Private for-profit"
+
 #Writes a csv file with the selected data
 write.csv(work.data, file = "../output/workdata.csv", row.names = F)
 save(work.data, file = "../output/workdata.Rdata")
+save(fulldata, file = "../output/fulldata.Rdata")
 ```
 
 
