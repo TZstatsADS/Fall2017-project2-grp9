@@ -122,7 +122,7 @@ shinyServer(function(input, output) {
     )
     
     greenLeafIcon <- makeIcon(
-      iconUrl = "http://www.myiconfinder.com/uploads/iconsets/256-256-f900504cdc9f243b1c6852985c35a7f7.png",
+      iconUrl = "../lib/RedPin.png",
       iconWidth = 50, iconHeight = 40,
       iconAnchorX = 40, iconAnchorY = 20
     )
