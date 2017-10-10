@@ -245,7 +245,7 @@ output$table.summary = renderTable({
                 round(mean(as.numeric(sub$WDRAW_DEBT_MDN), na.rm = T) * 100,0), round(mean(as.numeric(sub$MD_EARN_WNE_P10), na.rm = T),0))
       
       my.summary <- data.frame(cbind(Financial, Info))
-      names(my.summary) <- c("Financial (last 5 years average)", "Info")
+      names(my.summary) <- c("Financial (last 10 years average)", "Info")
       my.summary
       
     } 
