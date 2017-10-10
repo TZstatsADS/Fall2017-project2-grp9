@@ -3,8 +3,11 @@ library(maps)
 library(leaflet)
 library(DT)
 library(dplyr)
+library(plotly)
+library(ggplot2)
 
 load("../output/workdata.Rdata")
+load("../output/fulldata.Rdata")
 
 shinyServer(function(input, output) {
   
@@ -110,11 +113,32 @@ shinyServer(function(input, output) {
                      paste("Rank:", as.character(d5()$Rank))
     )
     
-    mapStates = map("state", fill = TRUE, plot = FALSE)
-    leaflet(data = mapStates) %>% addTiles() %>%
-      addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
-      addMarkers(as.numeric(d5()$LONGITUDE), as.numeric(d5()$LATITUDE), 
+    s = input$universities.table_rows_selected
+    
+    greenLeafIcon <- makeIcon(
+      iconUrl = "http://www.myiconfinder.com/uploads/iconsets/256-256-f900504cdc9f243b1c6852985c35a7f7.png",
+      iconWidth = 50, iconHeight = 40,
+      iconAnchorX = 40, iconAnchorY = 20
+    )
+    
+    if(length(s)){
+      mapStates = map("state", fill = TRUE, plot = FALSE)
+      leaflet(data = mapStates) %>% addTiles() %>%
+        addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE[-s]), as.numeric(d5()$LATITUDE[-s]), 
+                   popup = content) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE[s]), as.numeric(d5()$LATITUDE[s]), icon = greenLeafIcon)
+      
+    }
+    
+    else{
+      mapStates = map("state", fill = TRUE, plot = FALSE)
+      leaflet(data = mapStates) %>% addTiles() %>%
+        addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE) %>%
+        addMarkers(as.numeric(d5()$LONGITUDE), as.numeric(d5()$LATITUDE), 
                  popup = content)
+    }
+
   } )
 
   
@@ -136,8 +160,29 @@ shinyServer(function(input, output) {
       formatCurrency(c("Tuition (In-State)", "Tuition (Out of State)"), digits = 0)
     }, server = T
   )
-  output$introduction<- renderText({"This is an application for perspective students to choose the colleges that fit them best, developed by u u u and me"})
+
+  #Introduction-------------------------------------------------------------------------------------------
   
+  output$introduction<- renderText({
+    "This is an application for perspective students to choose the colleges that fit them best. This is an Rshiny project developed by Peilin, Qihang, 
+          Henrique, Kelly and Sijian. You can input your scores, expected expense, majors and some other preferences and see our recommendations for you 
+          immediately. You can also see the detailed informationby clicking the marker on the interactive map. "})
+  output$instruction = renderText({"the instruction goes here"})
+  output$datasource = renderText({"Data source: Higher Education Datasets, 
+          https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4"
+  })
+
+  
+  #Introduction-------------------------------------------------------------------------------------------
+  
+  output$introduction<- renderText({
+          "This is an application for perspective students to choose the colleges that fit them best. This is an Rshiny project developed by Peilin, Qihang, 
+          Henrique, Kelly and Sijian. You can input your scores, expected expense, majors and some other preferences and see our recommendations for you 
+          immediately. You can also see the detailed informationby clicking the marker on the interactive map. "})
+  output$instruction = renderText({"the instruction goes here"})
+  output$datasource = renderText({"Data source: Higher Education Datasets, 
+          https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4"
+  })
   #Selected indices--------------------------------------------------------------------------------------
   
   output$table.summary = renderTable({
@@ -157,21 +202,80 @@ shinyServer(function(input, output) {
       } else print("Please, select a University from the table below.")
     })
   
-  output$gender.bar = renderPlotly({
-
-    s = input$universities.table_row_last_clicked
-    if (length(s)) {
-      
-      
-      
-    } 
-  })
-  
   #------------------------------------------------------------------------------------------------------
   
+  #Graphical Analysis
+
+   output$ADM <- renderPlotly({
+     s = input$universities.table_row_last_clicked
+     if (length(s)) {
+     university <- d5()$INSTNM[s]
+     edu <- filter(fulldata, INSTNM == university)
+     edu$ADM_RATE = as.numeric(edu$ADM_RATE)
+     edu$Year = as.numeric(edu$Year)
+     p <- ggplot(data = edu,aes(x=Year, y=ADM_RATE)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Admission Rate with Trending")
+     ggplotly(p)
+     }
+     else print("Please, select a University from the table below.")
+   })
   
+  output$SAT <- renderPlotly({
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      university <- d5()$INSTNM[s]
+      edu <- filter(fulldata, INSTNM == university)
+      edu$SAT_AVG = as.numeric(edu$SAT_AVG)
+      edu$Year = as.numeric(edu$Year)
+      b <- ggplot(data = edu,aes(x=Year, y=SAT_AVG)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Average SAT with Trending")
+      ggplotly(b)
+    }
+    else print("Please, select a University from the table below.")
+  })
   
+
+  output$ACT <- renderPlotly({
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      university <- d5()$INSTNM[s]
+      edu <- filter(fulldata, INSTNM == university)
+      edu$ACTCMMID = as.numeric(edu$ACTCMMID)
+      edu$Year = as.numeric(edu$Year)
+      a <- ggplot(data = edu,aes(x=Year, y=ACTCMMID)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year ACT MID with Trending")
+      ggplotly(a)
+    }
+    else print("Please, select a University from the table below.")
+  })
   
+  output$FEM <- renderPlotly({
+    s = input$universities.table_row_last_clicked
+    if (length(s)) {
+      university <- d5()$INSTNM[s]
+      edu <- filter(fulldata, INSTNM == university)
+      edu$UGDS_WOMEN = as.numeric(edu$UGDS_WOMEN)
+      edu$Year = as.numeric(edu$Year)
+      d <- ggplot(data = edu,aes(x=Year, y=UGDS_WOMEN)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Share of Female Undergrads with Trending")
+      ggplotly(d)
+    }
+    else print("Please, select a University from the table below.")
+  })
+  
+  # output$ENR <- renderPlotly({
+  #   s = input$universities.table_row_last_clicked
+  #   if (length(s)) {
+  #     university <- d5()$INSTNM[s]
+  #     edu <- filter(fulldata, INSTNM == university)
+  #     edu$UGDS = as.numeric(edu$UGDS)
+  #     edu$Year = as.numeric(edu$Year)
+  #     e <- ggplot(data = edu,aes(x=Year, y=UGDS)) + geom_point() + geom_smooth(method = lm, color = "black") + ggtitle("5-Year Enrollments with Trending")
+  #     ggplotly(e)
+  #   }
+  #   else print("Please, select a University from the table below.")
+  # })
+  # 
+  
+
+
+  #------------------------------------------------------------------------------------------------------
   
 
   })

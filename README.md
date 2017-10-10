@@ -1,33 +1,17 @@
 ﻿# Project 2: Open Data App - an RShiny app development project
 
-### [Project Description](doc/project2_desc.md)
-
-![screenshot](doc/screenshot2.png)
-
-In this second project of GU4243/GR5243 Applied Data Science, we develop an *Exploratory Data Analysis and Visualization* shiny app on a topic of your choice using U.S. government open data released on the [data.gov](https://data.gov/) website. See [Project 2 Description](doc/project2_desc.md) for more details.  
-
-The **learning goals** for this project is:
-
-- business intelligence for data science
-- data cleaning
-- data visualization
-- systems development/design life cycle
-- shiny app/shiny server
-
-*The above general statement about project 2 can be removed once you are finished with your project. It is optional.
-
-## Project Title Lorem ipsum dolor sit amet
+## Project Title: Find your university
 Term: Fall 2017
 
-+ Team #
++ Team # group 9
 + **Projec title**: + Team members
 	+ Henrique Saboya
-	+ Peilin
-	+ Qihang
+	+ Peilin Qiu
+	+ Qihang Li
 	+ Yi Zhang
-	+ 
+	+ Sijian Xuan
 
-+ **Project summary**: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ **Project summary**: The project is an Rshiny app used for choosing proper universities for perspective college students. It uses the data from Higher Education Datasets from www.data.gov. Group members cleaned and analyzed the data, and created a filter-based choosing system. The application reacts to users' preferences immediately. Users can also click on different university to see detailed information including.... 
 
 + **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 

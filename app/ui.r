@@ -20,8 +20,8 @@ library(plotly)
 
 dashboardPage(
   
-  dashboardHeader(title='Choose a college!'),
-  skin = "green",
+  dashboardHeader(title='Find your university!'),
+  skin = "blue",
   dashboardSidebar(
     sidebarMenu(id='sidebarmenu',
                 menuItem("Introduction",tabName="overview",icon=icon("info")),
@@ -69,21 +69,29 @@ dashboardPage(
         tabItem(tabName = "overview",
                 mainPanel(
                   
-                  textOutput("introduction")
+                  textOutput("introduction"),
+                  textOutput("instruction"),
+                  textOutput("datasource")
                 )),
         
+        
         tabItem(tabName = "university_search",
-                
-                  tabBox(width=12,
+                fluidRow(
+                                   tabBox(width=12,
                          tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("mymap")),
                           
-                            tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
+                         tabPanel(title="Detailed Summary", width = 12, solidHeader = T, 
                                      fluidRow(
                                        column(4,tableOutput("table.summary")),
                                        column(8,plotlyOutput("gender.bar"))
+                                       
                             
-                          )
-                        )
+                          )),
+                         tabPanel(title = "Admission Rate Trend", width = 12, solidHeader = T, plotlyOutput("ADM")),
+                         tabPanel(title = "Average SAT Trend", width = 12, solidHeader = T, plotlyOutput("SAT")),
+                         tabPanel(title = "MID ACT Trend", width = 12, solidHeader = T, plotlyOutput("ACT")),
+                         tabPanel(title = "Share of Female Students Trend", width = 12, solidHeader = T, plotlyOutput("FEM")),
+                         tabPanel(title = "Total Enrollments Trend", width = 12, solidHeader = T, plotlyOutput("ENR"))
                   ),
                   
                   
@@ -91,7 +99,10 @@ dashboardPage(
                          
                          tabPanel('Ranking',
                                   dataTableOutput("universities.table"),
-                                  tags$style(type="text/css", '#myTable tfoot {display:none;}'))
+                                  tags$style(type="text/css", '#myTable tfoot {display:none;}')) 
+                )
+                
+
         
         
         
