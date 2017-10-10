@@ -28,8 +28,7 @@ proj/
 ├── app/
 ├── lib/
 ├── data/
-├── doc/
-└── output/
+└── doc/
 ```
 
 Please see each subfolder for a README file.
