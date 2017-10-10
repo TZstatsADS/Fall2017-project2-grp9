@@ -13,6 +13,8 @@ Term: Fall 2017
 
 + **Project summary**: The project is an Rshiny app used for choosing proper universities for perspective college students. It uses the data from Higher Education Datasets from www.data.gov. Group members cleaned and analyzed the data, and created a filter-based choosing system. The application reacts to users' preferences immediately. Users can also click on different university to see detailed information including.... 
 
++ **Link:https://xuansijian.shinyapps.io/pro2grp9/**
+
 + **Outlook**
 
 ![screenshot](lib/Intro.png)
